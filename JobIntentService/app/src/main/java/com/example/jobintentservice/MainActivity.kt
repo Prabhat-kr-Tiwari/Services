@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.jobintentservice.databinding.ActivityMainBinding
 import com.example.jobintentservice.ExampleJobIntentService.Companion
+import com.example.jobintentservice.ExampleJobIntentService.Companion.enqueueWork
 
 class MainActivity : AppCompatActivity() {
 
@@ -20,7 +21,8 @@ class MainActivity : AppCompatActivity() {
 
             val input=binding.editText.text.toString()
             val intent=Intent(this,ExampleJobIntentService::class.java)
-            intent.putExtra("inputExtra",intent)
+            intent.putExtra("inputExtra",input)
+            enqueueWork(this,intent)
 
 
 

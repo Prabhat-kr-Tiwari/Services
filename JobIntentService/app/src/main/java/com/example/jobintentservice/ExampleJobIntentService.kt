@@ -2,6 +2,7 @@ package com.example.jobintentservice
 
 import android.content.Context
 import android.content.Intent
+import android.os.SystemClock
 import android.util.Log
 import androidx.core.app.JobIntentService
 
@@ -27,6 +28,7 @@ class ExampleJobIntentService :JobIntentService() {
         val input=intent.getStringExtra("inputExtra")
         for (i in 0 ..10){
             if (isStopped) return
+            SystemClock.sleep(1000)
             Log.d(TAG, "$input-$i")
         }
 
