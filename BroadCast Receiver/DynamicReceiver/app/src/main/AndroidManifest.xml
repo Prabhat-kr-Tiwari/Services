@@ -21,13 +21,21 @@
             </intent-filter>
         </activity>
         <!--we have to specifiy expoerted to true if we don't specify exported to true-->
-       <!-- <receiver android:name=".ExampleBroadCastReceiver"
+       <!-- <receiver android:name=".OrderedReceiver1"
 
             android:exported="true"/>-->
         <!--receiving the intent using the intent action-->
-        <receiver android:name=".ExampleBroadCastReceiver"
+        <receiver android:name=".OrderedReceiver2"
             android:exported="true">
-            <intent-filter >
+            <intent-filter
+                android:priority="4">
+                <action android:name="com.codingflow.EXAMPLE_ACTION"/>
+            </intent-filter>
+        </receiver>
+        <receiver android:name=".OrderedReceiver3"
+            android:exported="true">
+            <intent-filter
+                android:priority="6">
                 <action android:name="com.codingflow.EXAMPLE_ACTION"/>
             </intent-filter>
         </receiver>

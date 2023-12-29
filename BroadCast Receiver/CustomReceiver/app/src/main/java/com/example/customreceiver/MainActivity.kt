@@ -1,5 +1,6 @@
 package com.example.customreceiver
 
+//this  broadcast sender
 import android.content.BroadcastReceiver
 import android.content.ComponentName
 import android.content.Context
@@ -9,6 +10,7 @@ import android.content.pm.PackageManager
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.SystemClock
 import android.util.Log
 import android.widget.TextView
 import androidx.annotation.RequiresApi
@@ -83,14 +85,25 @@ class MainActivity : AppCompatActivity() {
            sendBroadcast(intent)*/
 
            //another way for doing
-           val intent=Intent("com.codingflow.EXAMPLE_ACTION")
+           /*val intent=Intent("com.codingflow.EXAMPLE_ACTION")
            val packageManager=getPackageManager()
            val info=packageManager.queryBroadcastReceivers(intent,0)
            for (ResolveInfo in info){
                val componentName=ComponentName(ResolveInfo.activityInfo.packageName,ResolveInfo.activityInfo.name)
                intent.setComponent(componentName)
                sendBroadcast(intent)
-           }
+           }*/
+
+           //ordered receiver
+           val extras=Bundle()
+           extras.putString("stringExtra","start")
+
+           val intent=Intent("com.codingflow.EXAMPLE_ACTION")
+           intent.setPackage("com.example.dynamicreceiver")
+//          sendBroadcast(intent)
+          sendOrderedBroadcast(intent,null,ExampleBroadCastReceiver2(),null,0,"Start",extras)
+
+
 
 
        }

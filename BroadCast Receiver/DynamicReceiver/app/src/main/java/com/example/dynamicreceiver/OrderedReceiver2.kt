@@ -5,11 +5,10 @@ package com.example.dynamicreceiver
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.net.ConnectivityManager
-import android.util.Log
 import android.widget.Toast
 
-class ExampleBroadCastReceiver :BroadcastReceiver() {
+
+class OrderedReceiver2 :BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
 
 
@@ -41,8 +40,33 @@ class ExampleBroadCastReceiver :BroadcastReceiver() {
            Toast.makeText(context, receivedText.toString()+"prabhat" , Toast.LENGTH_SHORT).show()
        }*/
 
-        //explicit broadcast
-        Toast.makeText(context, "EBR Triggeered", Toast.LENGTH_SHORT).show()
 
+        //explicit broadcast
+       /* Toast.makeText(context, "OR2 Triggeered", Toast.LENGTH_SHORT).show()
+        Log.d("PRABHAT", "onReceive: oR2")*/
+
+        var resultCode = resultCode
+        var resultData = resultData
+        val resultExtras = getResultExtras(true)
+        var stringExtra = resultExtras.getString("stringExtra")
+
+        resultCode++
+        stringExtra += "->OR2"
+
+        val toastText = """
+            OR1
+            resultCode: $resultCode
+            resultData: $resultData
+            stringExtra: $stringExtra
+            """.trimIndent()
+
+        Toast.makeText(context, toastText, Toast.LENGTH_LONG).show()
+
+        resultData = "OR2"
+        resultExtras.putString("stringExtra", stringExtra)
+
+        setResult(resultCode, resultData, resultExtras)
+
+        abortBroadcast()
     }
 }
