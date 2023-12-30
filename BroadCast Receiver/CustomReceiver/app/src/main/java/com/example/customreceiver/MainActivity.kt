@@ -1,6 +1,7 @@
 package com.example.customreceiver
 
 //this  broadcast sender
+import android.Manifest
 import android.content.BroadcastReceiver
 import android.content.ComponentName
 import android.content.Context
@@ -15,6 +16,7 @@ import android.util.Log
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import com.example.customreceiver.databinding.ActivityMainBinding
+
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
      lateinit var  textView:TextView
@@ -101,7 +103,8 @@ class MainActivity : AppCompatActivity() {
            val intent=Intent("com.codingflow.EXAMPLE_ACTION")
            intent.setPackage("com.example.dynamicreceiver")
 //          sendBroadcast(intent)
-          sendOrderedBroadcast(intent,null,ExampleBroadCastReceiver2(),null,0,"Start",extras)
+          sendOrderedBroadcast(intent,
+              Manifest.permission.WAKE_LOCK,ExampleBroadCastReceiver2(),null,0,"Start",extras)
 
 
 
