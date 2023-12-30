@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-    <permission android:name="com.prabhat.CUSTOM_PERMISSION"/>
-    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+
 
 
 
@@ -25,41 +24,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-       <!-- <receiver android:name=".OrderedReceiver1"
-            android:permission="com.prabhat.CUSTOM"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="com.codingflow.EXAMPLE_ACTION"/>
 
-            </intent-filter>
-
-        </receiver>-->
-        <!--we have to specifiy expoerted to true if we don't specify exported to true-->
-       <!-- <receiver android:name=".OrderedReceiver1"
-
-            android:exported="true"/>-->
-        <!--receiving the intent using the intent action-->
-        <!-- android:exported="false
-         if  we set the exported to false outside app cannot trigerred our app"
-
-         if it is set to true and even if we have intent filter other app can triggered our broad
-         cast receiver-->
-        <receiver android:name=".OrderedReceiver2"
-            android:exported="true"
-            android:permission="android.permission.INTERNET">
-            <intent-filter
-                android:priority="4">
-                <action android:name="com.codingflow.EXAMPLE_ACTION"/>
-            </intent-filter>
-        </receiver>
-        <receiver android:name=".OrderedReceiver3"
-            android:exported="true"
-            android:permission="com.prabhat.CUSTOM_PERMISSION">
-            <intent-filter
-                android:priority="6">
-                <action android:name="com.codingflow.EXAMPLE_ACTION"/>
-            </intent-filter>
-        </receiver>
 
     </application>
 
