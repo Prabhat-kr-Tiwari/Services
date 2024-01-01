@@ -5,68 +5,61 @@ package com.example.dynamicreceiver
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.os.Looper
+import android.os.SystemClock
 import android.widget.Toast
+import java.util.logging.Handler
 
 
 class OrderedReceiver2 :BroadcastReceiver() {
+    companion object{
+        val handler= android.os.Handler()
+    }
     override fun onReceive(context: Context?, intent: Intent?) {
 
-
-       /* if (intent != null) {
-            if (Intent.ACTION_BOOT_COMPLETED.equals(intent.action)){
-                Log.d("PRABHAT", "onReceive: Boot")
-                Toast.makeText(context, "Boot completed", Toast.LENGTH_SHORT).show()
-            }
-
-        }*/
-        /*if (ConnectivityManager.CONNECTIVITY_ACTION.equals(intent?.action)){
-            Log.d("PRABHAT", "onReceive:Connectivty ")
-            Toast.makeText(context, "Connectivty changed", Toast.LENGTH_SHORT).show()
-
-            val noConnectivity=intent?.getBooleanExtra(ConnectivityManager.EXTRA_NO_CONNECTIVITY,false)
-            if (noConnectivity == true){
-                Toast.makeText(context, "Disconnected", Toast.LENGTH_SHORT).show()
-
-            }else{
-                Toast.makeText(context, "connected", Toast.LENGTH_SHORT).show()
-
-            }
-
-        }*/
-        //custom receiver
-      /* if ("com.example.PRABHAT".equals(intent?.action)){
-           val receivedText=intent?.getStringExtra("com.codingflow.EXTRA_TEXT")
-           Log.d("PRABHAT", "onReceive: ${receivedText.toString()}")
-           Toast.makeText(context, receivedText.toString()+"prabhat" , Toast.LENGTH_SHORT).show()
-       }*/
+        val pendingResult=goAsync()
 
 
-        //explicit broadcast
-       /* Toast.makeText(context, "OR2 Triggeered", Toast.LENGTH_SHORT).show()
-        Log.d("PRABHAT", "onReceive: oR2")*/
+        Thread(Runnable{
+            SystemClock.sleep(10000)
 
-        var resultCode = resultCode
-        var resultData = resultData
-        val resultExtras = getResultExtras(true)
-        var stringExtra = resultExtras.getString("stringExtra")
+            var resultCode = pendingResult.resultCode
+            var resultData =  pendingResult.resultData
+            val resultExtras =  pendingResult.getResultExtras(true)
+            var stringExtra = resultExtras.getString("stringExtra")
 
-        resultCode++
-        stringExtra += "->OR2"
+            resultCode++
+            stringExtra += "->OR2"
 
-        val toastText = """
+
+             val toastText = """
             OR1
             resultCode: $resultCode
             resultData: $resultData
             stringExtra: $stringExtra
             """.trimIndent()
 
-        Toast.makeText(context, toastText, Toast.LENGTH_LONG).show()
 
-        resultData = "OR2"
-        resultExtras.putString("stringExtra", stringExtra)
 
-        setResult(resultCode, resultData, resultExtras)
+            handler.post {
+                val toast = Toast.makeText(context, toastText, Toast.LENGTH_LONG)
+                toast.show()
+            }
 
-        //abortBroadcast()
+
+
+            Toast.makeText(context, toastText, Toast.LENGTH_LONG).show()
+
+            resultData = "OR2"
+            resultExtras.putString("stringExtra", stringExtra)
+
+            pendingResult.setResult(resultCode, resultData, resultExtras)
+            pendingResult.finish()
+
+        }).start()
+
+
+
     }
+
 }
